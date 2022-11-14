@@ -9,6 +9,10 @@ class TeachingMaterial extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name', 'medium_id', 'category_id'
+    ];
+
     public function medium() {
         return $this->belongsTo(Medium::class);
     }

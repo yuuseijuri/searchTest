@@ -10,14 +10,15 @@ use App\Models\Category;
 class TeachingMaterialController extends Controller
 {
     public function index(Request $request) {
-
-        //検索フォームに入力された値を取得
-        $medium = $request->input('medium');
-        $category = $request->input('category');
-        $keyword = $request->input('keyword');
-
+        // 検索フォームに入力された値を取得
+        $keyword = $request->input('name');
+        
+        $medium = $request->input('medium_id');
+        
+        $category = $request->input('category_id');
+        
         $query = TeachingMaterial::query();
-
+        // dd($query);
         //テーブル結合
         //リレーション先のテーブルのカラムも検索対象になっているので、joinでテーブル結合します。
         $query->join('media', function($query) use ($request) {
@@ -39,9 +40,9 @@ class TeachingMaterialController extends Controller
         }
 
         $items = $query->get();
-
+        
         $media_list = Medium::all();
-
+        
         $categories_list = Category::all();
 
         return view('index', compact('medium', 'category', 'keyword', 'items', 'media_list', 'categories_list'));
