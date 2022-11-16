@@ -9,7 +9,11 @@ class Medium extends Model
 {
     use HasFactory;
 
-    public function teaching_material() {
+    protected $fillable = [
+        'medium'
+    ];
+
+    public function teaching_materials() {
         return $this->hasMany(TeachingMaterial::class);
     }
 }

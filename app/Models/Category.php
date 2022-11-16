@@ -9,7 +9,11 @@ class Category extends Model
 {
     use HasFactory;
 
-    public function teaching_material() {
+    protected $fillable = [
+        'category'
+    ];
+
+    public function teaching_materials() {
         return $this->hasMany(TeachingMaterial::class);
     }
 }
