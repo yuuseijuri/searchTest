@@ -11,11 +11,11 @@ class TeachingMaterialController extends Controller
 {
     public function index(Request $request) {
         // 検索フォームに入力された値を取得
-        $keyword = $request->input('keyword', 'name');
+        $keyword = $request->input('name');
         
-        $medium = $request->input('medium_id', 'medium');
+        $medium = $request->input('medium');
         
-        $category = $request->input('category_id', 'category');
+        $category = $request->input('category');
         
         $query = TeachingMaterial::query();
         // dd($query);
@@ -28,11 +28,11 @@ class TeachingMaterialController extends Controller
         // });
 
         if(!empty($medium)) {
-            $query->where('medium_id', '$medium');
+            $query->where('medium_id', '=', '$medium');
         }
 
         if(!empty($category)) {
-            $query->where('category_id', '$category');
+            $query->where('category_id', '=', '$category');
         }
 
         if(!empty($keyword)) {
@@ -40,15 +40,15 @@ class TeachingMaterialController extends Controller
         }
 
         if((!empty($medium)) && (!empty($category))) {
-            $query->where('medium_id', $medium)->where('category_id', $category);
+            $query->where('medium_id', '=', $medium)->where('category_id', '=', $category);
         }
 
         if(((!empty($medium))) && (!empty($category)) && (!empty($keyword))) {
-            $query->where('medium_id', $medium)->where('category_id', $category)->where('name','like', "%{ $keyword }%");
+            $query->where('medium_id', '=', $medium)->where('category_id', '=', $category)->where('name', 'like', "%{ $keyword }%");
         }
 
         if((empty($medium)) && (empty($category)) && (empty($keyword))) {
-            $query->with('medium', 'category', 'keyword')->get();
+            $query->with('medium', 'category')->get();
         }
 
         $items = $query->get();
